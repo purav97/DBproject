@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "905085727566",
+    "firebase_url": "https://buybuy-8e222.firebaseio.com",
+    "project_id": "buybuy-8e222",
+    "storage_bucket": "buybuy-8e222.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905085727566:android:7f17b2aacf56b3ca",
+        "android_client_info": {
+          "package_name": "com.example.purav.buysell"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "905085727566-ppqf4r8jaj6c1ufvg6gh25u1rteu882i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG-SBuySoF21N0WTy1in45jZpnBbojcEM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
