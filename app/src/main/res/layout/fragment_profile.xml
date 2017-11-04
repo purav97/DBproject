@@ -1,13 +1,40 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical" >
+
+<TextView
+android:id="@+id/Title_Profile"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_centerHorizontal="true"
+    android:layout_marginTop="20dip"
+android:text="Profile Information"
+android:textAppearance="?android:attr/textAppearanceLarge"
+android:textSize="30dip" />
+
+<ImageView
+    android:id="@+id/post_add_image"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.purav.buysell.ProfileFragment">
+    android:layout_height="400dip"
+    android:layout_below="@+id/Title_Profile"
+    android:src="@drawable/images" />
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="profile fragment" />
+<Button
+    android:id="@+id/post_add_button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:backgroundTint="@color/colorPrimary"
+    android:elevation="24dp"
+    android:paddingLeft="20dip"
+    android:paddingRight="20dip"
+    android:text="Change Profile Information"
+    android:textColor="@android:color/white"
+    android:layout_centerHorizontal="true"
+    android:layout_below="@+id/post_add_image" />
 
-</FrameLayout>
+</RelativeLayout>

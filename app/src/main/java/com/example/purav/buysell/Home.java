@@ -1,9 +1,12 @@
 package com.example.purav.buysell;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+//import android.support.v7.appcompat.*;
+//import android.support.v4.app.FragmentManager;
+
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -80,7 +83,7 @@ public class Home extends AppCompatActivity {
         }
 
         if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
             mDrawerList.setItemChecked(position, true);
             mDrawerList.setSelection(position);
