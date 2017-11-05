@@ -4,9 +4,180 @@
     android:layout_height="match_parent"
     tools:context="com.example.purav.buysell.SellFragment">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAlignment="center"
+                android:layout_marginTop="20dip"
+                android:text="Sell Item"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="30dip" />
+
+            <!--<RelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="300dp">-->
+
+            <!--</RelativeLayout>-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/disp_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:textSize="20dip"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:text="   Title: " />
+
+                <EditText
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20dip"
+                    android:inputType="textPersonName"
+                    android:lines="1"
+                    android:hint="Max 50 characters"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp">
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/disp_tags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:textSize="20dip"
+                android:textColor="@android:color/holo_orange_dark"
+                android:text="   Tags: " />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:visibility="invisible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:textSize="20dip"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:text="   Title: " />
+
+                <EditText
+                    android:id="@+id/tag1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20dip"
+                    android:inputType="textPersonName"
+                    android:lines="1"
+                    android:hint="1 word of less than 20 characters"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:visibility="invisible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:textSize="20dip"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:text="   Title: " />
+
+                <EditText
+                    android:id="@+id/tag2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20dip"
+                    android:inputType="textPersonName"
+                    android:lines="1"
+                    android:hint="1 word of less than 20 characters"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:visibility="invisible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:textSize="20dip"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:text="   Title: " />
+
+                <EditText
+                    android:id="@+id/tag3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20dip"
+                    android:inputType="textPersonName"
+                    android:lines="1"
+                    android:hint="1 word of less than 20 characters"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dip"
+                android:text="   Description:"
+                android:textColor="@android:color/holo_orange_dark"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="5"
+                android:gravity="top"
+                android:hint="Maximum 500 characters"
+                android:textSize="20dip"
+                android:background="@android:color/holo_blue_light"
+                android:inputType="textMultiLine"
+                />
+
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+
+
 </RelativeLayout>
