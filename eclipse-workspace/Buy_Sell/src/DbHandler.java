@@ -131,8 +131,45 @@ public class DbHandler {
 		return success;
 	}
 	
+	public static JSONObject getProfileInfo(String uid){
+		JSONObject obj = new JSONObject();
+		System.out.println("getting profile info");
+		try{
+			// Create the connection
+			Connection conn = DriverManager.getConnection(connString, userName, passWord);
+			String insertTableSQL = "select profile_photo from \"user\" where uid = ?";
+			PreparedStatement preparedStatement = conn.prepareStatement(insertTableSQL);
+			preparedStatement.setString(1, uid);
+			ResultSet rs = preparedStatement.executeQuery();
+			JSONArray jarr = ResultSetConverter(rs);
+			if(jarr.length() != 1) {
+				System.out.println("jarr length: " + jarr.length());
+			}
+			obj = jarr.getJSONObject(0);
+			
+			if(obj.getString("profile_photo").equals("None")) {
+				System.out.println("jarr length: " + jarr.length());
+				obj.put("status", false);
+				obj.put("message", "Empty Profile Photo");
+				obj.put("image_set", false);
+				return obj;
+			}
+			else {
+				obj.put("status", true);
+				obj.put("image_set", true);
+			}
+			preparedStatement.close();	
+			conn.close();
+		} 
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return obj;
+	}
+	
 	public static JSONObject add_profile_photo(String uid,String encodedImage) {
 		JSONObject obj = new JSONObject();
+		System.out.println("starting to add photo");
 		try{
 			byte[] img = null; 
 			if(encodedImage!=null) {
@@ -151,17 +188,23 @@ public class DbHandler {
 			preparedStatement.setString(2, uid);
 			if(preparedStatement.executeUpdate() > 0) {
 				obj.put("status", true);
-				obj.put("data","Updated Profile Photo");	
+				obj.put("message","Updated Profile Photo");	
 			}
 			else {
 				obj.put("status",false);
 				obj.put("message", "Unable to update Profile Photo");
 			}
+			System.out.println("sending msg: status = " + obj.get("status"));
 			preparedStatement.close();	
 			conn.close();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		return obj;
+	}
+	
+	public static JSONObject getCategoriesSubCategories(){
+		JSONObject obj = new JSONObject();
 		return obj;
 	}
 	

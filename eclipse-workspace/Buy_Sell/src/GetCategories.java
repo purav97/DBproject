@@ -13,16 +13,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Servlet implementation class Sell_item
+ * Servlet implementation class GetCategories
  */
-@WebServlet("/Sell_item")
-public class Sell_item extends HttpServlet {
+@WebServlet("/GetCategories")
+public class GetCategories extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Sell_item() {
+    public GetCategories() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,7 +32,8 @@ public class Sell_item extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doPost(request,response);
+		doPost(request, response);
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -40,7 +41,8 @@ public class Sell_item extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		PrintWriter out = response.getWriter();	
+		PrintWriter out = response.getWriter();
+		System.out.println("got category info request");
 		response.setContentType("application/json");
 	    response.setCharacterEncoding("UTF-8");	
 		JSONObject obj = new JSONObject();
@@ -50,18 +52,34 @@ public class Sell_item extends HttpServlet {
 				obj.put("status", false);
 				obj.put("message", "Invalid session");
 				out.print(obj);
+				System.out.println("sending false status msg");
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		else {
-			String id = (String)request.getSession().getAttribute("id");
-			String image_title = (String)request.getParameter("image_title");
-			String Description = (String) request.getParameter("Description");
-			int Price = Integer.parseInt(request.getParameter("Price"));
-			int Category_id = Integer.parseInt(request.getParameter("Category"));
+		else 
+		{	
+			String userid = (String) request.getSession().getAttribute("id"); 
+			
+			if( userid == null) {
+				try {
+					obj.put("status", false);
+					obj.put("message", "Invalid username");
+					System.out.println("sending false username msg");
+					out.print(obj);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else {
+				System.out.println("sending DBhandler the request");
+				out.print(DbHandler.getCategoriesSubCategories());
+			}
 		}
+
+		
 	}
 
 }
