@@ -14,8 +14,8 @@ import java.util.Base64;
 
 public class DbHandler {
 	// connection strings
-	private static String connString = "jdbc:postgresql://localhost:5104/postgres";
-	private static String userName = "devansh";
+	private static String connString = "jdbc:postgresql://localhost:5432/postgres";
+	private static String userName = "purav";
 	private static String passWord = "";
 	
 	
@@ -131,8 +131,45 @@ public class DbHandler {
 		return success;
 	}
 	
+	public static JSONObject getProfileInfo(String uid){
+		JSONObject obj = new JSONObject();
+		System.out.println("getting profile info");
+		try{
+			// Create the connection
+			Connection conn = DriverManager.getConnection(connString, userName, passWord);
+			String insertTableSQL = "select profile_photo from \"user\" where uid = ?";
+			PreparedStatement preparedStatement = conn.prepareStatement(insertTableSQL);
+			preparedStatement.setString(1, uid);
+			ResultSet rs = preparedStatement.executeQuery();
+			JSONArray jarr = ResultSetConverter(rs);
+			if(jarr.length() != 1) {
+				System.out.println("jarr length: " + jarr.length());
+			}
+			obj = jarr.getJSONObject(0);
+			
+			if(obj.getString("profile_photo").equals("None")) {
+				System.out.println("jarr length: " + jarr.length());
+				obj.put("status", false);
+				obj.put("message", "Empty Profile Photo");
+				obj.put("image_set", false);
+				return obj;
+			}
+			else {
+				obj.put("status", true);
+				obj.put("image_set", true);
+			}
+			preparedStatement.close();	
+			conn.close();
+		} 
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return obj;
+	}
+	
 	public static JSONObject add_profile_photo(String uid,String encodedImage) {
 		JSONObject obj = new JSONObject();
+		System.out.println("starting to add photo");
 		try{
 			byte[] img = null; 
 			if(encodedImage!=null) {
@@ -151,18 +188,95 @@ public class DbHandler {
 			preparedStatement.setString(2, uid);
 			if(preparedStatement.executeUpdate() > 0) {
 				obj.put("status", true);
-				obj.put("data","Updated Profile Photo");	
+				obj.put("message","Updated Profile Photo");	
 			}
 			else {
 				obj.put("status",false);
 				obj.put("message", "Unable to update Profile Photo");
 			}
+			System.out.println("sending msg: status = " + obj.get("status"));
 			preparedStatement.close();	
 			conn.close();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		return obj;
+	}
+	
+	public static JSONObject getCategoriesSubCategories() throws JSONException{
+		JSONObject ret = new JSONObject();
+		System.out.println("Getting Cat & SubCat");
+		try {
+			Connection conn = DriverManager.getConnection(connString, userName, passWord);
+			String selCategory = "select * from Category";
+			PreparedStatement preparedStatement1 = conn.prepareStatement(selCategory);
+			ResultSet rs = preparedStatement1.executeQuery();
+			JSONArray jarr = ResultSetConverter(rs);
+			preparedStatement1.close();
+			System.out.println("jarr length: " + jarr.length());
+			
+			String selSubCategory = "select * from Subcategory order by Category_name";
+			
+			PreparedStatement preparedStatement2 = conn.prepareStatement(selSubCategory);
+			
+			ResultSet rs2 = preparedStatement2.executeQuery();
+			
+			JSONArray subcat = ResultSetConverter(rs2);
+			
+			JSONArray finalsubcat = new JSONArray();
+			
+			JSONArray indsubcat = new JSONArray(); 
+				
+			boolean first = true;
+			
+			String last_cat = "";
+			
+			for(int h = 0; h < subcat.length() ; h++) {
+				String cat_name = (String) subcat.getJSONObject(h).get("Category_name");
+				String sub_name = (String) subcat.getJSONObject(h).get("Subcategory_name");
+				if(first) {
+					first = false;
+					indsubcat.put(sub_name);
+					last_cat = cat_name;
+					continue;
+				}
+				if(cat_name != last_cat) {
+					JSONObject jfk = new JSONObject();
+					jfk.put("category_name", last_cat);
+					jfk.put("subcategories", indsubcat);
+					finalsubcat.put(jfk);
+					indsubcat = new JSONArray();
+					last_cat = cat_name;
+				}
+				
+				if(h == (subcat.length() - 1)) {
+					JSONObject jfk = new JSONObject();
+					indsubcat.put(sub_name);
+					jfk.put("category_name", last_cat);
+					jfk.put("subcategories", indsubcat);
+					finalsubcat.put(jfk);
+					break;
+				}
+				indsubcat.put(sub_name);
+			}
+			
+			ret.put("status", true);
+			ret.put("categories", jarr);
+			ret.put("subcategories", finalsubcat);
+			
+			System.out.println("Printing JSON of Categories & Subcategories:");
+			System.out.println(ret.toString());
+				
+			preparedStatement2.close();
+			conn.close();
+
+		}
+		catch(Exception e){
+			ret.put("status", false);
+			ret.put("message", "Unable to handle Categories & Subcategories");
+		}
+		
+		return ret;
 	}
 	
 	private static JSONArray ResultSetConverter(ResultSet rs) throws SQLException, JSONException {
@@ -173,7 +287,7 @@ public class DbHandler {
 	    while(rs.next()) {
 	        int numColumns = rsmd.getColumnCount();
 	        JSONObject obj = new JSONObject();
-	        int postid=-1;
+//	        int postid=-1;
 	        for (int i=1; i<numColumns+1; i++) {
 	          String column_name = rsmd.getColumnName(i);
 
