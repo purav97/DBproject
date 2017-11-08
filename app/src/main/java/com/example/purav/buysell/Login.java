@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class Login extends AppCompatActivity {
 
-    public static final String urlx = "http://192.168.0.111:8080/Buy_Sell";
+    public static final String urlx = "http://172.20.10.5:8080/Buy_Sell";
 
 
     @Override
